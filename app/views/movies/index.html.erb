@@ -2,11 +2,20 @@
 <h2>All Movies</h2>
 
 
-<%#  Part 2: Start here... %>
+<%= form_tag movies_path, method: :get, id: 'ratings_form' do %>
+  Include:
+  <% @all_ratings.each do |rating| %>
+    <div class="form-check  form-check-inline">
+      <%= label_tag "ratings[#{rating}]", rating, class: 'form-check-label' %>
+      <%= check_box_tag "ratings[#{rating}]", '',  ('checked' if @param.include? rating) %>
+    </div>
+  <% end %>
+  <%= submit_tag 'Refresh', id: 'ratings_submit', class: 'btn btn-primary' %>
+<% end %>
 
 
 
-<table class="table table-striped col-md-12" id="movies">
+<table class="table table-striped col-md-12" id="movies"> 
   <thead>
     <tr>
       <th class="<%= 'hilite' if @sort=='title' %>">
@@ -14,7 +23,7 @@
       </th>
       <th>Rating</th>
       <th class="<%= ( 'hilite' if @sort=='release_date') %>">
-        <%=link_to 'Release Date', movies_path(sort: 'release_date'), id: 'release_date' %></th>
+        <%=link_to 'Release Date', movies_path(sort: 'release_date'), id: 'release_date_header' %></th>
       <th>More Info</th>
     </tr>
   </thead>
